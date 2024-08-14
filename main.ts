@@ -2,19 +2,30 @@ import type MarkdownIt from "markdown-it/index.js";
 import type { StateCore, Token } from "markdown-it/index.js";
 
 export interface Config {
-  calloutSymbols?: Partial<CalloutSymbols>;
-  elementTypes?: Partial<CalloutSymbols>;
+  /**
+   * The element that wraps the created callout. Defaults to "div"
+   */
   defaultElementType?: string;
+  /**
+   * An override map to use different elements for different callout types
+   */
+  elementTypes?: Partial<{ [calloutType: string]: string }>;
+  /**
+   * The element that wraps the title and symbol
+   */
   calloutTitleElementType?: string;
+  /**
+   * A symbol inserted before the title for given callout types
+   */
+  calloutSymbols?: Partial<{ [calloutType: string]: string }>;
+  /**
+   * The element to wrap callout symbols in. Defaults to "span"
+   */
   calloutSymbolElementType?: string;
 }
 
-export interface CalloutSymbols {
-  [calloutName: string]: string;
-}
-
-export default function (md: MarkdownIt, config?: Config) {
-  const { elementTypes, defaultElementType = "div" } = config ?? {};
+export default function (md: MarkdownIt, config: Config = {}) {
+  const { elementTypes, defaultElementType = "div" } = config;
 
   md.core.ruler.after("block", "callouts", (state: StateCore) => {
     const tokens = state.tokens;
@@ -43,7 +54,10 @@ export default function (md: MarkdownIt, config?: Config) {
 
       openToken.type = "callout_open";
       openToken.tag = elementTypes?.[calloutType] ?? defaultElementType;
-      openToken.attrPush(["class", `callout-${calloutType.toLowerCase()}`]);
+      openToken.attrPush([
+        "class",
+        `callout callout-${calloutType.toLowerCase()}`,
+      ]);
 
       const closeToken = tokens[closeIndex];
       closeToken.type = "callout_close";

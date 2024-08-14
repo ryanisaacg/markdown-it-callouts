@@ -2,15 +2,15 @@
   "name": "markdown-it-callouts",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Parse Markdown callouts in markdown-it",
   "main": "./main.js",
   "types": "./main.d.ts",
   "scripts": {
     "test": "vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["markdown-it-plugin"],
+  "author": "Ryan Goldstein (https://ryanisaacg.com)",
+  "license": "MIT",
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "markdown-it": "^14.1.0",
