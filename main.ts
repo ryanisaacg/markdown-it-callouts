@@ -13,12 +13,8 @@ export interface CalloutSymbols {
   [calloutName: string]: string;
 }
 
-export default function (config: Config): (md: MarkdownIt) => void {
-  return (md) => doPlugin(md, config);
-}
-
-function doPlugin(md: MarkdownIt, config: Config) {
-  const { elementTypes, defaultElementType = "div" } = config;
+export default function (md: MarkdownIt, config?: Config) {
+  const { elementTypes, defaultElementType = "div" } = config ?? {};
 
   md.core.ruler.after("block", "callouts", (state: StateCore) => {
     const tokens = state.tokens;
