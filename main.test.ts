@@ -8,7 +8,7 @@ function instance(config: Config): MarkdownIt {
   return markdownIt({
     html: true,
     typographer: true,
-  }).use(markdownItCallout(config));
+  }).use(markdownItCallout, config);
 }
 
 test("basic callout", () => {
