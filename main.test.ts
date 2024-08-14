@@ -18,7 +18,7 @@ test("basic callout", () => {
 > Body line 1
 >
 > Body line 2`)
-  ).toEqual(`<div class="callout-note">
+  ).toEqual(`<div class="callout callout-note">
 <h3 class="callout-title">Title!</h3><p>Body line 1</p>
 <p>Body line 2</p>
 </div>
@@ -32,7 +32,7 @@ test("custom element", () => {
 > Body line 1
 >
 > Body line 2`)
-  ).toEqual(`<aside class="callout-info">
+  ).toEqual(`<aside class="callout callout-info">
 <h3 class="callout-title">Title!</h3><p>Body line 1</p>
 <p>Body line 2</p>
 </aside>
@@ -49,7 +49,7 @@ test("custom element", () => {
 > Body line 1
 >
 > Body line 2`)
-  ).toEqual(`<div class="callout-warning">
+  ).toEqual(`<div class="callout callout-warning">
 <h3 class="callout-title"><div class="callout-symbol">W</div>Title!</h3><p>Body line 1</p>
 <p>Body line 2</p>
 </div>
