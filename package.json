@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-callouts",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parse Markdown callouts in markdown-it",
   "main": "./main.js",
   "types": "./main.d.ts",
