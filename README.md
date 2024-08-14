@@ -32,7 +32,9 @@ export interface Config {
    */
   defaultElementType?: string;
   /**
-   * An override map to use different elements for different callout types
+   * An override map to use different elements for different callout types.
+   *
+   * All callout types are converted to lowercase, so use lowercase keys
    */
   elementTypes?: Partial<{ [calloutType: string]: string }>;
   /**
@@ -41,6 +43,8 @@ export interface Config {
   calloutTitleElementType?: string;
   /**
    * A symbol inserted before the title for given callout types
+   *
+   * All callout types are converted to lowercase, so use lowercase keys
    */
   calloutSymbols?: Partial<{ [calloutType: string]: string }>;
   /**

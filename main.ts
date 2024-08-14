@@ -7,7 +7,9 @@ export interface Config {
    */
   defaultElementType?: string;
   /**
-   * An override map to use different elements for different callout types
+   * An override map to use different elements for different callout types.
+   *
+   * All callout types are converted to lowercase, so use lowercase keys
    */
   elementTypes?: Partial<{ [calloutType: string]: string }>;
   /**
@@ -16,6 +18,8 @@ export interface Config {
   calloutTitleElementType?: string;
   /**
    * A symbol inserted before the title for given callout types
+   *
+   * All callout types are converted to lowercase, so use lowercase keys
    */
   calloutSymbols?: Partial<{ [calloutType: string]: string }>;
   /**
@@ -54,10 +58,7 @@ export default function (md: MarkdownIt, config: Config = {}) {
 
       openToken.type = "callout_open";
       openToken.tag = elementTypes?.[calloutType] ?? defaultElementType;
-      openToken.attrPush([
-        "class",
-        `callout callout-${calloutType.toLowerCase()}`,
-      ]);
+      openToken.attrPush(["class", `callout callout-${calloutType}`]);
 
       const closeToken = tokens[closeIndex];
       closeToken.type = "callout_close";
@@ -132,7 +133,7 @@ function parseCalloutDefinition(blockquoteTokens: Token[]): {
   return {
     inlineToken: inline,
     remainingInlineContent,
-    calloutType,
+    calloutType: calloutType.toLowerCase(),
     title: title?.trim(),
   };
 }

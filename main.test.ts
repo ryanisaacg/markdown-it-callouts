@@ -55,3 +55,20 @@ test("custom element", () => {
 </div>
 `);
 });
+
+test("custom element with caps", () => {
+  const md = instance({
+    calloutSymbolElementType: "div",
+    calloutSymbols: { warning: "W" },
+  });
+  expect(
+    md.render(`> [!WARNING] Title!
+> Body line 1
+>
+> Body line 2`)
+  ).toEqual(`<div class="callout callout-warning">
+<h3 class="callout-title"><div class="callout-symbol">W</div>Title!</h3><p>Body line 1</p>
+<p>Body line 2</p>
+</div>
+`);
+});
