@@ -19,5 +19,8 @@
     "markdown-it": "^14.1.0",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
+  },
+  "prettier": {
+      "tabWidth": 2
   }
 }

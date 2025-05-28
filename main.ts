@@ -1,6 +1,24 @@
 import type MarkdownIt from "markdown-it/index.js";
 import type { StateCore, Token } from "markdown-it/index.js";
 
+/**
+ * How to handle a callout title and symbol if no custom callout title is specified:
+ * i.e
+ * > [!Info]
+ * > Callout text here
+ *
+ * Instead of
+ * > [!Info] Title
+ * > Callout text here.
+ *
+ * - "none": (default) do not render any title.
+ * - "blank": render a blank title (""). Renders the callout-title and callout-symbol containers,
+ *            so you can have a symbol even with no title.
+ * - "match-type": render a title that matches the type of callout. An info callout will have an "Info" title,
+ *                   a note callout will have a "Note" title, etc.
+ */
+export type EmptyTitleFallback = "none" | "blank" | "match-type";
+
 export interface Config {
   /**
    * The element that wraps the created callout. Defaults to "div"
@@ -26,6 +44,10 @@ export interface Config {
    * The element to wrap callout symbols in. Defaults to "span"
    */
   calloutSymbolElementType?: string;
+  /**
+   * May be "none" (default), "empty", or "match-type", see EmptyTitleFallback for more
+   */
+  emptyTitleFallback?: EmptyTitleFallback;
 }
 
 export default function (md: MarkdownIt, config: Config = {}) {
@@ -64,12 +86,21 @@ export default function (md: MarkdownIt, config: Config = {}) {
       closeToken.type = "callout_close";
       closeToken.tag = openToken.tag;
 
-      if (title) {
+      const titleContents = title
+        ? title
+        : // Fallbacks for a missing title
+        config.emptyTitleFallback === "match-type"
+        ? prettyFormatCalloutType(calloutType)
+        : config.emptyTitleFallback === "blank"
+        ? ""
+        : null;
+
+      if (titleContents != null) {
         const titleTokens = createTitleTokens(
           state,
           config,
           calloutType,
-          title
+          titleContents
         );
         tokens.splice(openIdx + 1, 0, ...titleTokens);
       }
@@ -185,4 +216,11 @@ function createTitleTokens(
   );
 
   return titleTokens;
+}
+
+/* Takes a string and returns the same string with the first letter capitalized.
+ * Assumes that the input string is lowercase.
+ */
+function prettyFormatCalloutType(calloutType: string): string {
+  return calloutType.charAt(0).toUpperCase() + calloutType.slice(1);
 }

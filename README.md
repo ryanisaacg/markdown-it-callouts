@@ -1,6 +1,6 @@
 # markdown-it-callouts
 
-A simple `markdown-it` plugin that adds support for [Obsidian callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) or [GitHub Flavored Markdown alerts](https://github.com/orgs/community/discussions/16925). 
+A simple `markdown-it` plugin that adds support for [Obsidian callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) or [GitHub Flavored Markdown alerts](https://github.com/orgs/community/discussions/16925).
 
 Given the following markdown:
 
@@ -51,6 +51,14 @@ export interface Config {
    * The element to wrap callout symbols in. Defaults to "span"
    */
   calloutSymbolElementType?: string;
+  /**
+   * - "none": (default) do not render any title.
+   * - "blank": render a blank title (""). Renders the callout-title and callout-symbol containers,
+   *            so you can have a symbol even with no title.
+   * - "match-type": render a title that matches the type of callout. An info callout will have an "Info" title,
+   *                   a note callout will have a "Note" title, etc.
+   */
+  emptyTitleFallback?: "none" | "blank" | "match-type";
 }
 ```
 
