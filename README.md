@@ -64,3 +64,7 @@ export interface Config {
 
 This package is inspired by the [Eleventy Notes package](https://github.com/rothsandro/eleventy-notes/) implementation of callout parsing. It's designed to be pretty drop-in, especially for Eleventy blogs.
 
+## Changelog
+
+### v1.1.0
+- Add support for handling empty titles in a configurable way (#1)
